@@ -1,0 +1,66 @@
+.pages{
+    margin-top: 26px;
+    margin-right: 20px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items:center;
+    gap: 24px;
+    font-size: 14px;
+    font-weight: 400;
+    color:#808080;    
+}
+
+.pagination{
+    display: flex;
+    align-items:center;
+    gap: 10px;
+    list-style: none;
+    font-size: 14px;
+    font-weight: 400;
+}
+.page-link{
+    position: relative;
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    width: 21px;
+    height: 25px;
+}
+.page-item { 
+    border-radius:3px;
+    border: none; 
+    cursor: pointer;
+}
+li.page-item:hover {
+    background: #e4e4e4;
+    border-radius: 3px;
+}
+li.page-item.active:hover {
+    background: #0064FF;
+    border-radius: 3px;
+}
+
+.page-item-prev{
+    cursor: pointer;
+}
+.page-item-next{
+    cursor: pointer;
+}
+
+.page-item-next :hover .right path{
+    stroke:#0064EB;
+}
+.page-item-prev :hover .left path{
+    fill:#0064EB;
+}
+.active{
+    background:#0064EB;
+    color: #FFFFFF;
+}
+
+@media (max-width: 375px) {
+    .pages{
+        margin-bottom: 30px;
+    }
+}

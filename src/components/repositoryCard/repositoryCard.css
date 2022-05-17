@@ -1,0 +1,21 @@
+.repositories-card{
+    display: flex;
+    flex-direction:column;
+
+    gap: 16px;
+    background:#FFFFFF;
+    padding: 24px 32px 24px 32px;
+}
+.repositories-card a{
+    font-size: 24px;
+    font-weight: 500;
+    text-decoration: none;
+    color: #0064EB;
+}
+span.repository-info {
+    word-wrap: break-word;
+}
+.repository-info a{
+    font-size: 14px;
+    cursor: pointer;
+}

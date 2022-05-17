@@ -1,0 +1,144 @@
+.avatar-column{
+    flex: 35%;    
+    display: flex;  
+    justify-content: center;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+.container-info{
+    margin-top: 11px; 
+}
+.avatar-column img{
+    height: 280px;
+    width: 280px;
+    border-radius:140px;
+}
+.info{    
+    background:#F9F9F9;
+    margin-top: 29px;    
+}
+.info h1{
+    font-size: 26px;
+    text-decoration: none;   
+    padding-bottom: 12px;
+}
+.info a{
+    font-size: 18px;
+    text-decoration: none;  
+    color:#0064EB; 
+}
+.followers-info{
+    margin-top: 26px;
+    display: flex;
+    align-items:center;
+    gap: 20px;
+}
+.followers-info img{
+    height: 24px;
+    width: 24px;
+}
+.followers{
+    display: flex;    
+    align-items:center;
+    height: 24px;   
+    gap: 5px;
+}
+.following{
+    display: flex; 
+    align-items: center;
+    height: 24px;
+    gap: 5px;
+}
+
+@media (max-width: 990px) {
+    .avatar-column{
+        min-width: 330px; 
+    }
+}
+
+@media (max-width: 690px) {
+    .followers-info {
+        margin-top: 26px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        justify-content: center;
+    }
+    .container-info{        
+        margin-top: -11px; 
+        text-align: center;
+    }
+}
+@media (max-width: 540px) {
+
+    .avatar-column {
+        display: flex;
+        justify-content: center;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+@media (max-width: 416px) {
+
+    .avatar-column {
+        display: flex;
+        justify-content: center;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+@media (max-width: 393px) {
+
+    .avatar-column {
+        display: flex;
+        justify-content: center;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+@media (max-width: 390px) {
+
+    .avatar-column {
+        display: flex;
+        justify-content: center;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+@media (max-width: 376px) {
+
+    .avatar-column {
+        display: flex;
+        justify-content: center;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+@media (max-width: 360px) {
+
+    .avatar-column {
+        display: flex;
+        justify-content: center;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+@media (max-width: 320px) {
+    .avatar-column {
+        display: flex;
+        justify-content: center;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+@media (max-width: 280px) {
+    .avatar-column {
+        display: flex;
+        justify-content: center;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}

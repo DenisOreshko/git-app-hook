@@ -1,0 +1,19 @@
+.wrapper-rep-not-found{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center; 
+    align-items:center;
+    margin-bottom: 100px;
+}
+.reposit-not-found{
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    gap: 24px;
+}
+.reposit-not-found img{
+    height: 110px;
+    width: 110px;
+}
