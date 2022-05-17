@@ -56,7 +56,7 @@ const Header = (props) => {
         const reg = /%/ig;//remove '%' character from search query. Make erro 400 github api
         const searchQuery = (e.target.value).replace(reg, '');
 
-        setSearch(search => searchQuery);
+        setSearch(searchQuery);
     }
 
     const onPressEnter = (e) => {        
