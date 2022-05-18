@@ -1,26 +1,18 @@
-import {Component} from 'react'; 
+import {useState, useEffect} from 'react'; 
 import ErrorBoundaryMessage from '../errorBoundaryMessage/errorBoundaryMessage';
 
-class ErrorBoundary extends Component{
-    state = {
-        error: false
-    }
+const ErrorBoundary = (props) => {
+    const [error, setError] = useState(false);
 
-    componentDidCatch(error, errorInfo){
-        console.log('error: ' + error);
-        
-        this.setState({
-            error:true
-        })
-    }
+    useEffect((error, errorInfo)=>{
+        console.log('error: '+ error +', errorInfo: ' + errorInfo);
+        //setError(true);
+    },[error]);
 
-    render() {
-        if (this.state.error){
-            return <ErrorBoundaryMessage/>
-        }
-
-        return this.props.children;
+    if (error){
+        return <ErrorBoundaryMessage/>
     }
+    return props.children;
 }
 
 export default ErrorBoundary;

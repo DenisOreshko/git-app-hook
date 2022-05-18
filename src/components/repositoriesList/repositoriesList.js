@@ -1,128 +1,92 @@
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 import RepositoryCard from '../repositoryCard/repositoryCard';
 import GitHubService from '../../services/GitHubService';
 import './repositoriesList.css';
 import Spinner from '../spinner/spinner';
-import ErrorMessage from '../errorMessage/errorMessage';
+import Error403Message from '../error403Message/error403Message';
 import RepositoriesNotFoundPage from '../repositoriesNotFound/repositoriesNotFound';
 import DisconnectedPage from '../disconnectedPage/disconnectedPage';
 
-class RepositoriesList extends Component{
+const RepositoriesList = (props) => {
 
-    state = {
-        username: null,
-        pageNumber: 1,
-        repositories:[],
-        public_repos: null,
-        loading:false,
-        error: false,
-        disconnected: false,
-        showRepSpinner: false
-    }
+    const [repositories, setRepositories] = useState([]);
+    const [public_repos, setPublicRepos] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
+    const [disconnected, setDisconnected] = useState(false);
+    const [showRepSpinner, setShowRepSpinner] = useState(false);
 
-    gitHubService = new GitHubService();
+    const gitHubService = new GitHubService();
 
-    componentDidMount(){
-        this.setState({
-            username: this.props.username,
-        })
-        this.updateRepositories(this.state.pageNumber);
-    }    
+    useEffect(() => {
+        updateRepositories();
+    },[]);
 
-    componentDidUpdate(prevProps,prevState) {
-        if(prevProps.username !== this.props.username) {
-            this.updateRepositories();
-        }
-        if(prevProps.set_page !== this.props.set_page) {
-            this.updateRepositories();
-        }
-    }
+    useEffect(()=>{
+        updateRepositories();
+    },[props.username, props.pageNumber]);
 
-    onError = (error) => {
+    const onError = (error) => {
         if(error.status === 0){
-            this.setState({
-                loading:false,
-                error:false,
-                disconnected:true
-            })
+            setLoading(false);
+            setError(false);
+            setDisconnected(true);
         }else{
-            this.setState({
-                loading:false,
-                error:true,
-                disconnected:false
-            })
+            setLoading(false);
+            setError(true);
+            setDisconnected(false);
         }        
     } 
 
-    onRepositoriesLoaded = (repositories) => {
-        this.setState({
-            repositories,
-            loading:false,
-            error:false,
-            disconnected:false,
-            showRepSpinner:true
-        })
+    const onRepositoriesLoaded = (repositories) => {
+        console.log('onRepositoriesLoaded()');
+        setRepositories(repositories);
+        setLoading(false);
+        setError(false);
+        setDisconnected(false);
+        setShowRepSpinner(true);
     }
 
-    onLoadingSpinner = () =>{
-        this.setState({
-          loading:true,
-          disconnected:false
-        });
+    const onLoadingSpinner = () =>{
+        setLoading(true);
+        setDisconnected(false);      
     }
 
-    onRequest = (username, offset, pageNumber) => {
-        this.gitHubService
+    const onRequest = (username, offset, pageNumber) => {
+        gitHubService
             .getRepositories(username, offset, pageNumber)
-            .then(this.onRepositoriesLoaded)
-            .catch(this.onError);
+            .then(onRepositoriesLoaded)
+            .catch(onError);
     }
 
-    updateRepositories = () => {        
-        const {username, public_repos, set_page} = this.props;
+    const updateRepositories = () => {
+        const {username, public_repos, pageNumber} = props;
         if(public_repos === 0){
-            this.setState({
-                public_repos: 0
-            })
+            setPublicRepos(0);       
             return;
         }
-
-        this.onLoadingSpinner();
-
-        this.onRequest(username, 4, set_page);
+        onLoadingSpinner();
+        onRequest(username, 4, pageNumber);        
     }
 
-    render() {
-        const {repositories, public_repos, loading, error, disconnected, showRepSpinner} = this.state;
-        const disconnectedPage = disconnected ? <DisconnectedPage/> : null;
-        const errorMessage = error ? <ErrorMessage/> : null;
-        const spinner = (showRepSpinner && loading && !disconnected) ? <SpinnerForRepositories/>:null;
-        const emptyRepositoriesPage = (public_repos === 0) ? <RepositoriesNotFoundPage/> : null;
-        const content = !(disconnected || error || (public_repos === 0)) ? <View repositories={repositories} 
-                                                                                 onPage={this.onPage} 
-                                                                                 public_repos={this.props.public_repos}/> : null;     
+    const disconnectedPage = disconnected ? <DisconnectedPage/> : null;
+    const error403Message = error ? <Error403Message/> : null;
+    const spinner = (showRepSpinner && loading && !disconnected) ? <Spinner/>:null;
+    const emptyRepositoriesPage = (public_repos === 0) ? <RepositoriesNotFoundPage/> : null;
+    const content = !(disconnected || error || (public_repos === 0)) ? <ViewRepositoriesList repositories={repositories}/> : null; 
 
-        return (
-            <div className='rep'>
-                {disconnectedPage}
-                {errorMessage}
-                {spinner}
-                {emptyRepositoriesPage}
-                {content}
-            </div>
-        )
-    }    
-}
-
-const SpinnerForRepositories = () => {
     return (
-        <div className="spinner-rep">
-            <Spinner/>
+        <div className='rep'>
+            {disconnectedPage}
+            {error403Message}
+            {spinner}
+            {emptyRepositoriesPage}
+            {content}
         </div>
     )
 }
 
-const View = ({repositories}) => {
+const ViewRepositoriesList = ({repositories}) => {
 
     const elements = repositories.map(item => {
                 const {id, ...itemProps} = item;
@@ -135,4 +99,5 @@ const View = ({repositories}) => {
         </div>
     )
 }
+
 export default RepositoriesList;

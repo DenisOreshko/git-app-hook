@@ -22,7 +22,7 @@ const Content = ({user}) =>{
               <>
                 <ErrorBoundary>
                     {(user.public_repos) ? <div className="reposit-count"><span >Repositories ({user.public_repos})</span></div> : null}
-                    <RepositoriesList username={user.login} public_repos={user.public_repos} set_page={page}/> 
+                    <RepositoriesList username={user.login} public_repos={user.public_repos} pageNumber={page}/> 
                 </ErrorBoundary>  
                 <ErrorBoundary>
                     <PageNavigation public_repos={user.public_repos} onPage={(page)=> setPage(page)}/>

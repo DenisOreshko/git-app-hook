@@ -1,146 +1,126 @@
-import { Component } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import Header from './components/header/header.js';
 import InitialPage from './components/initialPage/initialPage';
 import UserNotFoundPage from './components/userNotFoundPage/userNotFoundPage';
 import Spinner from './components/spinner/spinner';
 import GitHubService from './services/GitHubService';
-import ErrorMessage from './components/errorMessage/errorMessage';
+import Error403Message from './components/error403Message/error403Message';
 import DisconnectedPage from './components/disconnectedPage/disconnectedPage';
 import Content from './components/content/content';
 
-class App extends Component{
+const App = () => {
+  const [searchUsername, setSearchUsername] = useState("");
+  const [initState, setInitState] = useState(true);
+  const [userNotFound, setUserNotFound] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error403, setError403] = useState(false);
+  const [disconnected, setDisconnected] = useState(false);
+  const [user, setUser] = useState({});
 
-  state = {
-      searchUsername:"",
-      initState:true,
-      userNotFound: false,
-      loading: false,
-      error:false,
-      errorStatus: 200,
-      disconnected: false,
-      user:{}
-  }
+  const gitHubService = new GitHubService();
 
-  gitHubService = new GitHubService();
+  const onError = (error) => {
 
-  onError = (error) => {
     switch(error.status){
-      case 0:   this.setState({    
-                    searchUsername:"",
-                    initState:false,
-                    userNotFound:false,
-                    loading:false,                
-                    error:false,                                       
-                    errorStatus:0,
-                    disconnected: true});
-                break;
+      case 0:   
+          setSearchUsername("");
+          setInitState(false);
+          setUserNotFound(false);
+          setLoading(false);
+          setError403(false);
+          setDisconnected(true);
+          break;
       case 400: 
-                this.setState({
-                    searchUsername:"",
-                    initState:false,
-                    userNotFound:true,
-                    loading:false, 
-                    error:true,                    
-                    errorStatus:400,                    
-                    disconnected: false});
-                break;
-      case 403: 
-                this.setState({
-                    searchUsername:"",
-                    loading:false, 
-                    error:true,                    
-                    errorStatus:403,
-                    disconnected: false});
-                break;
+          setSearchUsername("");
+          setInitState(false);
+          setUserNotFound(true);
+          setLoading(false);
+          setError403(false);
+          setDisconnected(false);
+          break;
+      case 403:
+          setSearchUsername("");
+          setLoading(false);
+          setError403(true);
+          setDisconnected(false); 
+          break;
       case 404:
-                this.setState({
-                    searchUsername:"", 
-                    loading:false,
-                    userNotFound:true,
-                    errorStatus:404,
-                    disconnected: false});
-                break;
+          setSearchUsername("");
+          setLoading(false);
+          setUserNotFound(true);
+          setError403(false);
+          setDisconnected(false);
+          break;
       default: break;
     }
   }
 
-  onUserLoaded = (user) => {
-    this.setState({
-        user, 
-        searchUsername:"", 
-        loading: false, 
-        userNotFound: false,
-        error:false,
-        errorStatus:200,
-        disconnected: false
-    })
+  const onUserLoaded = (user) => {
+    setUser(user);
+    setSearchUsername("");
+    setLoading(false);
+    setUserNotFound(false);
+    setError403(false);
+    setDisconnected(false);
   }
 
-  onLoadingSpinner = () =>{
-    this.setState({loading:true});
+  const onLoadingSpinner = () =>{
+    setLoading(true);
   }
 
-  updateUser = (username) =>{
+  const updateUser = (username) =>{  
+    if(username === ""){   
+       return;
+    }  
 
-    this.onLoadingSpinner();
-    
-    this.gitHubService
-          .getUser(username)
-          .then(this.onUserLoaded)
-          .catch(this.onError);           
+    onLoadingSpinner();
+
+    gitHubService
+    .getUser(username)
+    .then(onUserLoaded)
+    .catch(onError);         
   }
 
-  onSearchUserApp = (search) => {
+  const onSearchUserApp = (search) => {
     if(search === ''){
-        this.setState({
-              initState: true,
-              userNotFound:false,
-              error: false,
-              disconnected: false,
-              searchUsername: search        
-        });
+      setSearchUsername(search);
+      setInitState(true);
+      setUserNotFound(false);      
+      setError403(false);
+      setDisconnected(false);
     }else{
-        this.setState({
-              initState: false,
-              error: false,
-              disconnected: false,
-              searchUsername: search
-        });     
+      setSearchUsername(search);
+      setInitState(false);      
+      setError403(false);
+      setDisconnected(false);    
     }
   }
 
-  componentDidUpdate(prevProps, prevState){
-    if(prevState.searchUsername !== this.state.searchUsername) {
-      if(this.state.searchUsername !== '')
-        this.updateUser(this.state.searchUsername);
-    }
-  }
+  useEffect(()=>{
+    updateUser(searchUsername);
+  },[searchUsername])
 
-  render(){
-    console.log('App.js render()');
-    const {initState, userNotFound, loading, error, user, disconnected} = this.state;
-    const disconnectedPage = disconnected ? <DisconnectedPage/> : null;
-    const initPage = initState ? <InitialPage/> : null;
-    const userNotFoundPage = userNotFound ? <UserNotFoundPage/> : null; 
-    const errorPage = error ? <ErrorMessage errorStatus={this.state.errorStatus}/> : null;  
-    const spinner = loading ? <Spinner/>:null; 
-    const content = !(initState || error || userNotFound || loading || disconnected) ? <Content user={user}/> : null;
+  const disconnectedPage = disconnected ? <DisconnectedPage/> : null;
+  const initPage = initState ? <InitialPage/> : null;
+  const userNotFoundPage = userNotFound ? <UserNotFoundPage/> : null; 
+  const error403Page = error403 ? <Error403Message/> : null;  
+  const spinner = loading ? <Spinner/>:null; 
+  const content = !(initState || error403 || userNotFound || loading || disconnected) ? <Content user={user}/> : null;
     
-    return (
-        <div className="App">
-              <Header onSearchUserApp={this.onSearchUserApp}/>
-              {spinner}
-              <div>
-                {disconnectedPage}
-                {initPage}
-                {userNotFoundPage}
-                {errorPage}              
-                {content}
-              </div>
-        </div>
-      )
-  }  
+  return (
+    <div className="App">
+          <Header onSearchUserApp={onSearchUserApp}/>
+          {spinner}
+          <div>
+            {disconnectedPage}
+            {initPage}
+            {userNotFoundPage}
+            {error403Page}              
+            {content}
+          </div>
+    </div>
+  )
 }
 
 export default App;

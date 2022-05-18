@@ -1,7 +1,7 @@
 import {Component, useState, useEffect} from 'react';
 import GitHubService from '../../services/GitHubService';
 import img403 from './403.png';
-import './errorMessage.css';
+import './error403Message.css';
 
 // class ErrorMessage extends  Component{
 
@@ -37,9 +37,9 @@ import './errorMessage.css';
 //     }    
 // }
 
-const ErrorMessage = (prop) => {
+const Error403Message = (prop) => {
 
-    const [reset, setReset] = useState(0);
+    const [ret, setRet] = useState(0);
     const  gitHubService = new GitHubService();
 
     useEffect(()=> {
@@ -51,12 +51,12 @@ const ErrorMessage = (prop) => {
     
 
     const onRateLoaded = (reset) => {
-        setReset(reset);
+        setRet(ret);
     }
 
-    let hour = new Date(+reset * 1000).getHours();
-    let minute = new Date(+reset * 1000).getMinutes();
-    let second = new Date(+reset * 1000).getSeconds();
+    let hour = new Date(+ret * 1000).getHours();
+    let minute = new Date(+ret * 1000).getMinutes();
+    let second = new Date(+ret * 1000).getSeconds();
 
     return (
         <div className="error">
@@ -67,4 +67,4 @@ const ErrorMessage = (prop) => {
     )
 }
 
-export default ErrorMessage;
+export default Error403Message;
