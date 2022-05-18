@@ -3,7 +3,7 @@ import GitHubService from '../../services/GitHubService';
 import img403 from './403.png';
 import './error403Message.css';
 
-const Error403Message = (prop) => {
+const Error403Message = () => {
 
     const [ret, setRet] = useState(0);
     const  gitHubService = new GitHubService();
