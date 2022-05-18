@@ -39,7 +39,6 @@ const RepositoriesList = (props) => {
     } 
 
     const onRepositoriesLoaded = (repositories) => {
-        console.log('onRepositoriesLoaded()');
         setRepositories(repositories);
         setLoading(false);
         setError(false);
