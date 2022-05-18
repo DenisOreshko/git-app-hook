@@ -42,21 +42,19 @@ const Error403Message = (prop) => {
     const [ret, setRet] = useState(0);
     const  gitHubService = new GitHubService();
 
+    const onRateLoaded = (ret) => {
+        setRet(ret);
+    }
+    
+    let hour = new Date(+ret * 1000).getHours();
+    let minute = new Date(+ret * 1000).getMinutes();
+    let second = new Date(+ret * 1000).getSeconds();
+
     useEffect(()=> {
         gitHubService
         .getRateLimitRemaining()
         .then(onRateLoaded)}
-        ,[])
-
-    
-
-    const onRateLoaded = (reset) => {
-        setRet(ret);
-    }
-
-    let hour = new Date(+ret * 1000).getHours();
-    let minute = new Date(+ret * 1000).getMinutes();
-    let second = new Date(+ret * 1000).getSeconds();
+        ,[ret])        
 
     return (
         <div className="error">
