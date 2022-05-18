@@ -1,4 +1,4 @@
-import { useState } from 'react';  
+import {useState,useEffect,useRef} from 'react';  
 import iconGitHub from '../../resources/img/icon/icon_github.svg';
 import searchIcon from '../../resources/img/icon/search.svg';
 import './header.css';
@@ -7,6 +7,8 @@ import './header.css';
 const Header = (props) => {
 
     const [search, setSearch] = useState('');
+
+    const inputRef = useRef(null);
 
     const onUpdateSearch = (e) => {     
         const reg = /%/ig;//remove '%' character from search query. Make erro 400 github api
@@ -23,13 +25,18 @@ const Header = (props) => {
         }        
     }
 
+    useEffect(()=>{
+        inputRef.current.focus();
+    },[])
+
+
     return(
             <header className="header">
                 <img src={iconGitHub} alt="icon_github"/>
                 <form>
                     <img src={searchIcon} alt="icon"/>
                     <input  
-                            // ref={this.inputRef}
+                            ref={inputRef}
                             type="text" 
                             placeholder="Enter GitHub username"
                             value={search}
