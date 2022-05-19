@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import RepositoryCard from '../repositoryCard/repositoryCard';
 import GitHubService from '../../services/GitHubService';
 import './repositoriesList.css';
 import Spinner from '../spinner/spinner';
 import Error403Message from '../error403Message/error403Message';
 import RepositoriesNotFoundPage from '../repositoriesNotFound/repositoriesNotFound';
 import DisconnectedPage from '../disconnectedPage/disconnectedPage';
+import ViewRepositoriesList from '../viewRepositoriesList/viewRepositoriesList';
+
 
 const RepositoriesList = (props) => {
 
@@ -39,7 +40,6 @@ const RepositoriesList = (props) => {
     } 
 
     const onRepositoriesLoaded = (repositories) => {
-        console.log('onRepositoriesLoaded()');
         setRepositories(repositories);
         setLoading(false);
         setError(false);
@@ -82,20 +82,6 @@ const RepositoriesList = (props) => {
             {spinner}
             {emptyRepositoriesPage}
             {content}
-        </div>
-    )
-}
-
-const ViewRepositoriesList = ({repositories}) => {
-
-    const elements = repositories.map(item => {
-                const {id, ...itemProps} = item;
-                return (<RepositoryCard key={id} {...itemProps}/>)
-            })
-
-    return (
-        <div className="repositories-list">
-            {elements}
         </div>
     )
 }
