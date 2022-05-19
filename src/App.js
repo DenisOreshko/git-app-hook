@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import {useEffect, useState} from 'react';
+=======
+import { useEffect, useState } from 'react';
+>>>>>>> af94d70036c68f512be17bd1574677006ec6a44a
 import './App.css';
 import Header from './components/header/header.js';
 import InitialPage from './components/initialPage/initialPage';
