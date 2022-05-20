@@ -10,7 +10,7 @@ import DisconnectedPage from './components/disconnectedPage/disconnectedPage';
 import Content from './components/content/content';
 
 const App = () => {
-  const [searchUsername, setSearchUsername] = useState("");
+  const [searchUsername, setSearchUsername] = useState('');
   const [initState, setInitState] = useState(true);
   const [userNotFound, setUserNotFound] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -20,13 +20,17 @@ const App = () => {
 
   const gitHubService = new GitHubService();
 
-  const onError = (error) => {
-    setInitState(false);
-    setSearchUsername("");    
+  const onDefaultState = () => {
+    setSearchUsername('');    
     setLoading(false);
     setUserNotFound(false);
     setError403(false);
     setDisconnected(false);
+  }
+
+  const onError = (error) => {
+    onDefaultState();
+    setInitState(false);   
 
     switch(error.status){
       case 0:             
@@ -47,12 +51,7 @@ const App = () => {
 
   const onUserLoaded = (user) => {
     setUser(user);
-
-    setSearchUsername("");
-    setLoading(false);
-    setUserNotFound(false);
-    setError403(false);
-    setDisconnected(false);
+    onDefaultState();
   }
 
   const onLoadingSpinner = () =>{
@@ -68,7 +67,7 @@ const App = () => {
   }
 
   const updateUser = (username) =>{  
-    if(username === ""){   
+    if(username === ''){   
        return;
     } 
     onLoadingSpinner();
@@ -76,10 +75,8 @@ const App = () => {
   }
 
   const onSearchUserApp = (search) => {
-    setSearchUsername(search);          
-    setError403(false);
-    setDisconnected(false);
-    setUserNotFound(false);
+    onDefaultState();
+    setSearchUsername(search);  
     setInitState(search === '');
   }
 
