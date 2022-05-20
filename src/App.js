@@ -21,36 +21,25 @@ const App = () => {
   const gitHubService = new GitHubService();
 
   const onError = (error) => {
+    setInitState(false);
+    setSearchUsername("");    
+    setLoading(false);
+    setUserNotFound(false);
+    setError403(false);
+    setDisconnected(false);
 
     switch(error.status){
-      case 0:   
-          setSearchUsername("");
-          setInitState(false);
-          setUserNotFound(false);
-          setLoading(false);
-          setError403(false);
+      case 0:             
           setDisconnected(true);
           break;
       case 400: 
-          setSearchUsername("");
-          setInitState(false);
           setUserNotFound(true);
-          setLoading(false);
-          setError403(false);
-          setDisconnected(false);
           break;
-      case 403:
-          setSearchUsername("");
-          setLoading(false);
+      case 403:      
           setError403(true);
-          setDisconnected(false); 
           break;
       case 404:
-          setSearchUsername("");
-          setLoading(false);
           setUserNotFound(true);
-          setError403(false);
-          setDisconnected(false);
           break;
       default: break;
     }
@@ -58,6 +47,7 @@ const App = () => {
 
   const onUserLoaded = (user) => {
     setUser(user);
+
     setSearchUsername("");
     setLoading(false);
     setUserNotFound(false);
@@ -67,33 +57,35 @@ const App = () => {
 
   const onLoadingSpinner = () =>{
     setLoading(true);
+    setUserNotFound(false);
+  }
+
+  const onRequest = (username) => {
+    gitHubService
+    .getUser(username)
+    .then(onUserLoaded)
+    .catch(onError);  
   }
 
   const updateUser = (username) =>{  
     if(username === ""){   
        return;
-    }  
-
+    } 
     onLoadingSpinner();
-
-    gitHubService
-    .getUser(username)
-    .then(onUserLoaded)
-    .catch(onError);         
+    onRequest(username);        
   }
 
   const onSearchUserApp = (search) => {
+    setSearchUsername(search);          
+    setError403(false);
+    setDisconnected(false);
+    setUserNotFound(false);
+
     if(search === ''){
-      setSearchUsername(search);
       setInitState(true);
-      setUserNotFound(false);      
-      setError403(false);
-      setDisconnected(false);
+         
     }else{
-      setSearchUsername(search);
-      setInitState(false);      
-      setError403(false);
-      setDisconnected(false);    
+      setInitState(false);    
     }
   }
 

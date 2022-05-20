@@ -20,7 +20,7 @@ const Error403Message = () => {
         gitHubService
         .getRateLimitRemaining()
         .then(onRateLoaded)}
-        ,[ret])        
+        ,[])        
 
     return (
         <div className="error">

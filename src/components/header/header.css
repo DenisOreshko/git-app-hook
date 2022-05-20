@@ -38,6 +38,11 @@
     width:455px;
     border-radius: 0 6px 6px 0;       
 }
+.text-danger{
+    color: red;
+    border:2px solid red;
+}
+
 @media (max-width: 610px) {
     .header form {
         width: 480px;
