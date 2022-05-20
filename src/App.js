@@ -80,13 +80,7 @@ const App = () => {
     setError403(false);
     setDisconnected(false);
     setUserNotFound(false);
-
-    if(search === ''){
-      setInitState(true);
-         
-    }else{
-      setInitState(false);    
-    }
+    setInitState(search === '');
   }
 
   useEffect(()=>{
