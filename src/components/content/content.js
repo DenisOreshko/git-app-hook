@@ -10,7 +10,7 @@ const Content = ({user}) =>{
     
     //page number of the list of repositories
     const [page, setPage] = useState(0); 
-  
+    console.log('render Content.js');
     return (
       <FlexContainer 
             avatarColumn = {

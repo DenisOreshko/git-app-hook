@@ -20,8 +20,7 @@ const App = () => {
 
   const gitHubService = new GitHubService();
 
-  const onDefaultState = () => {
-    setSearchUsername('');    
+  const onDefaultState = () => {      
     setLoading(false);
     setUserNotFound(false);
     setError403(false);
@@ -31,7 +30,7 @@ const App = () => {
   const onError = (error) => {
     onDefaultState();
     setInitState(false);   
-
+    setSearchUsername('');  
     switch(error.status){
       case 0:             
           setDisconnected(true);
@@ -50,8 +49,10 @@ const App = () => {
   }
 
   const onUserLoaded = (user) => {
+    console.log('onUserLoaded');
     setUser(user);
-    onDefaultState();
+    setLoading(false);
+    setSearchUsername('');  
   }
 
   const onLoadingSpinner = () =>{
@@ -67,6 +68,7 @@ const App = () => {
   }
 
   const updateUser = (username) =>{  
+    console.log('updateUser');
     if(username === ''){   
        return;
     } 
@@ -75,22 +77,28 @@ const App = () => {
   }
 
   const onSearchUserApp = (search) => {
+    console.log('onSearchUserApp');
+    setUser({});
     onDefaultState();
+    
     setSearchUsername(search);  
     setInitState(search === '');
   }
 
   useEffect(()=>{
+    console.log('useEffect');
     updateUser(searchUsername);
   },[searchUsername])
 
+  console.log('render App.js');
+  console.log('user.login: ' + user.login);
   const disconnectedPage = disconnected ? <DisconnectedPage/> : null;
   const initPage = initState ? <InitialPage/> : null;
   const userNotFoundPage = userNotFound ? <UserNotFoundPage/> : null; 
   const error403Page = error403 ? <Error403Message/> : null;  
   const spinner = loading ? <Spinner/>:null; 
-  const content = !(initState || error403 || userNotFound || loading || disconnected) ? <Content user={user}/> : null;
-    
+  const content = !(initState || error403 || userNotFound || loading || disconnected || !user.login) ? <Content user={user}/> : null;
+  
   return (
     <div className="App">
           <Header onSearchUserApp={onSearchUserApp}/>

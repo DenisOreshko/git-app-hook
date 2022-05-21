@@ -12,7 +12,7 @@
 .error span{
     margin-bottom: 15px;
 }
-@media (max-width: 1680px) {
+@media (max-width: 1980px) {
     .error img{
         height: 173px; 
         width: 400px; 
