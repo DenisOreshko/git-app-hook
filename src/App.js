@@ -49,7 +49,6 @@ const App = () => {
   }
 
   const onUserLoaded = (user) => {
-    console.log('onUserLoaded');
     setUser(user);
     setLoading(false);
     setSearchUsername('');  
@@ -68,7 +67,6 @@ const App = () => {
   }
 
   const updateUser = (username) =>{  
-    console.log('updateUser');
     if(username === ''){   
        return;
     } 
@@ -77,7 +75,6 @@ const App = () => {
   }
 
   const onSearchUserApp = (search) => {
-    console.log('onSearchUserApp');
     setUser({});
     onDefaultState();
     
@@ -86,12 +83,9 @@ const App = () => {
   }
 
   useEffect(()=>{
-    console.log('useEffect');
     updateUser(searchUsername);
   },[searchUsername])
 
-  console.log('render App.js');
-  console.log('user.login: ' + user.login);
   const disconnectedPage = disconnected ? <DisconnectedPage/> : null;
   const initPage = initState ? <InitialPage/> : null;
   const userNotFoundPage = userNotFound ? <UserNotFoundPage/> : null; 
