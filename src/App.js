@@ -31,8 +31,9 @@ const App = () => {
   const onSearchUserApp = (search) => {
     clearError();
     setUser({});
-    setSearchUsername(search);  
     setInitState(search === '');
+    setSearchUsername(search);  
+    
   }
 
   useEffect(()=>{
@@ -43,7 +44,6 @@ const App = () => {
   const spinner = loading ? <Spinner/>:null; 
   const errorPage = error && !initState ? <ErrorPage error={error} notFoundPage={<UserNotFoundPage/>} /> : null; 
   const content = !(initState || loading || error || !user.login) ? <Content user={user}/> : null;
-  console.log('render App.js');
   return (
     <div className="App">
           <Header onSearchUserApp={onSearchUserApp}/>

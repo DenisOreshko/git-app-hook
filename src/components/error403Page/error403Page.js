@@ -16,6 +16,10 @@ const Error403Page = () => {
     let minute = new Date(+ret * 1000).getMinutes();
     let second = new Date(+ret * 1000).getSeconds();
 
+    const transformTime = (item) =>{
+        return item<10 ? `0${item}`: item
+    }
+
     useEffect(()=> {
         getRateLimitRemaining().then(onRateLoaded)
     },[])        
@@ -24,7 +28,7 @@ const Error403Page = () => {
         <div className="error">
             <img src={img403} alt="Error"/>
             <span>GitHub API request limit exceeded</span> 
-            <span>Please try again in {hour}:{minute}:{second}</span>               
+            <span>Please try again in {transformTime(hour)}:{transformTime(minute)}:{transformTime(second)}</span>               
         </div>
     )
 }
