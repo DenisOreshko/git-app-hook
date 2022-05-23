@@ -15,6 +15,7 @@ const App = () => {
   const {loading, error, getUser, clearError} = useGitHubService();
 
   const onUserLoaded = (user) => {
+    clearError();
     setUser(user);
     setSearchUsername('');  
   }
@@ -29,11 +30,9 @@ const App = () => {
   }
 
   const onSearchUserApp = (search) => {
-    clearError();
     setUser({});
     setInitState(search === '');
     setSearchUsername(search);  
-    
   }
 
   useEffect(()=>{

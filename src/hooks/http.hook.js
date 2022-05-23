@@ -5,7 +5,7 @@ export const useHttp = () => {
     const [error, setError] = useState(null);
 
     const request = useCallback(async (url, method ='GET', body = null, headers = {
-        // 'Content-Type': 'application/json',
+        'Content-Type': 'application/json',
         'accept': 'application/vnd.github.v3+json'}) => {
             
             setLoading(true);
