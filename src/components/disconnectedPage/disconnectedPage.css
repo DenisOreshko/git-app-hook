@@ -11,3 +11,40 @@
     height: 500px;
     width: 100%;
 }
+.color-h{
+    animation: col 4s linear infinite;
+}
+
+@keyframes col {
+    0%{fill:#B4BFC1}
+    30% {fill:#3685fc}
+    80%{fill:#B4BFC1}
+}
+.color-d{
+    animation: cold 4s linear infinite;
+}
+
+@keyframes cold {
+    0%{fill:#ABB5B7}
+    30% {fill:#0064FF}
+    80%{fill:#ABB5B7}
+}
+
+.color-krh{
+    animation: colkrh 4s linear infinite;
+}
+
+@keyframes colkrh {
+    0%{fill:#ABB5B7}
+    30% {fill:#C40E72}
+    80%{fill:#ABB5B7}
+}
+.color-krd{
+    animation: colkrd 4s linear infinite;
+}
+
+@keyframes colkrd {
+    0%{fill:#B4BFC1}
+    30% {fill:#DB0E88}
+    80%{fill:#B4BFC1}
+}
