@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react';
+import {BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
 import Header from './components/header/header.js';
 import InitialPage from './components/initialPage/initialPage';
@@ -39,24 +40,35 @@ const App = () => {
     setSearchUsername(search);  
   }
 
-  useEffect(()=>{
-    updateUser(searchUsername);
-  },[searchUsername])  
-
   const initPage = initState ? <InitialPage/> : null;
   const spinner = loading ? <Spinner/>:null; 
   const errorPage = error && !initState ? <ErrorPage error={error} notFoundPage={<UserNotFoundPage/>} /> : null; 
   const content = !(initState || loading || error || !user.login) ? <Content user={user}/> : null;
-  return (
-    <div className="App">
-          <Header onSearchUserApp={onSearchUserApp}/>
-          {spinner}
-          <div>
-            {initPage}
-            {content}
-            {errorPage}
-          </div>
-    </div>
+
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+    updateUser(searchUsername);
+
+  },[searchUsername])   
+
+  return (  
+        <div className="App">
+              <Header onSearchUserApp={onSearchUserApp}/>
+              {spinner}
+              <div>
+                <Routes> 
+                  <Route path="/" element={
+                        <>
+                          {initPage}
+                          {content}
+                          {errorPage}
+                        </>
+                  }/>                 
+                  <Route path="*" element={<UserNotFoundPage/>}/>                  
+                </Routes>                
+              </div>
+        </div>
   )
 }
 
