@@ -20,8 +20,12 @@ const App = () => {
     setSearchUsername('');  
   }
 
+  const onError = (e) =>{
+    setSearchUsername('');
+  }
+
   const onRequest = (username) => {
-    getUser(username).then(onUserLoaded)  
+    getUser(username).then(onUserLoaded).catch(onError); 
   }
 
   const updateUser = (username) =>{  
