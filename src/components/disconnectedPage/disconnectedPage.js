@@ -1,10 +1,10 @@
 import './disconnectedPage.css';
-import imgDisconnected from './icons8-wi-fi-off-96.png'
+import DisconnectedIcon  from './disconnectedIcon';
 
 const DisconnectedPage = () => {
     return(
         <div className="disconnected-container">            
-            <img src={imgDisconnected} alt="disconnected"/>
+            <DisconnectedIcon/>
             <span>Internet Disconnected </span>
         </div>
     )

@@ -1,6 +1,5 @@
 import './initialPage.css';
 import InitIcoSvg from './initIcosvg';
-
 const InitialPage = () => {
     return (
         <div className="main-init-container">
