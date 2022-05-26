@@ -39,7 +39,7 @@ const RepositoriesList = (props) => {
     useEffect(()=>{
         console.log('RepositoriesList useEffect() [props.username]');
         setShowRepSpinner(false);
-        //updateRepositories();
+        updateRepositories();
     },[props.username]);
 
     useEffect(()=>{
