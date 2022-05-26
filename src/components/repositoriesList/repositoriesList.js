@@ -9,7 +9,6 @@ import ViewRepositoriesList from '../viewRepositoriesList/viewRepositoriesList';
 
 const RepositoriesList = (props) => {
     const [repositories, setRepositories] = useState([]);
-    const [public_repos, setPublicRepos] = useState(null);
     const [showRepSpinner, setShowRepSpinner] = useState(false);
     const {loading, error, getRepositories, clearError} = useGitHubService();
 
@@ -25,8 +24,7 @@ const RepositoriesList = (props) => {
     const updateRepositories = () => {
         clearError();
         const {username, public_repos, pageNumber} = props;
-        if(public_repos === 0){
-            setPublicRepos(0);       
+        if(public_repos === 0){    
             return;
         }
         onRequest(username, 4, pageNumber);        
@@ -41,8 +39,8 @@ const RepositoriesList = (props) => {
     },[props.username, props.pageNumber]);
     
     const spinner = (showRepSpinner && loading) ? <Spinner/>:null;
-    const content = !(error || (public_repos === 0)) ? <ViewRepositoriesList repositories={repositories}/> : null;   
-    const emptyRepositoriesPage = (public_repos === 0) ? <RepositoriesNotFoundPage/> : null;    
+    const content = !(error || (props.public_repos === 0)) ? <ViewRepositoriesList repositories={repositories}/> : null;   
+    const emptyRepositoriesPage = (props.public_repos === 0) ? <RepositoriesNotFoundPage/> : null;    
     const errorPage = error ? <ErrorPage error={error} notFoundPage={<RepositoriesNotFoundPage/>} /> : null;  
 
     return (

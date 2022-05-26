@@ -8,7 +8,7 @@ const User = (props) => {
 
     useEffect(()=> {
         onUserLoaded(props.user);
-    }, [user]);
+    }, [props.user]);
     
     const followersTransform = (num) =>{
         let thousands = num/1000;

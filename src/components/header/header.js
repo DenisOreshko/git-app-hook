@@ -1,4 +1,5 @@
 import {useState,useEffect,useRef} from 'react';  
+import { Link } from 'react-router-dom';
 import iconGitHub from '../../resources/img/icon/icon_github.svg';
 import searchIcon from '../../resources/img/icon/search.svg';
 import './header.css';
@@ -31,7 +32,7 @@ const Header = (props) => {
 
     return(
             <header className="header">
-                <img src={iconGitHub} alt="icon_github"/>
+                <Link to="/"><img src={iconGitHub} alt="icon_github"/></Link>
                 <form>
                     <img src={searchIcon} alt="icon"/>
                     <input  

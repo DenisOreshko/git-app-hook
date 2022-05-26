@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import FlexContainer from "../flexContainer/flexContainer";
 
+
 const Content = ({user}) =>{
     
     //page number of the list of repositories
