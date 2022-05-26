@@ -13,6 +13,7 @@ const RepositoriesList = (props) => {
     const {loading, error, getRepositories, clearError} = useGitHubService();
 
     const onRepositoriesLoaded = (repositories) => { 
+        console.log('onRepositoriesLoaded()');
         setRepositories(repositories);
         setShowRepSpinner(true);    
     }
@@ -31,17 +32,29 @@ const RepositoriesList = (props) => {
     }  
 
     useEffect(() => {
-        updateRepositories();
+        console.log('RepositoriesList useEffect() []');
+        //updateRepositories();
     },[]);
 
     useEffect(()=>{
+        console.log('RepositoriesList useEffect() [props.username]');
+        setShowRepSpinner(false);
+        //updateRepositories();
+    },[props.username]);
+
+    useEffect(()=>{
+        console.log('RepositoriesList useEffect() [props.pageNumber]');        
         updateRepositories();
-    },[props.username, props.pageNumber]);
+    },[props.pageNumber]);
     
     const spinner = (showRepSpinner && loading) ? <Spinner/>:null;
     const content = !(error || (props.public_repos === 0)) ? <ViewRepositoriesList repositories={repositories}/> : null;   
     const emptyRepositoriesPage = (props.public_repos === 0) ? <RepositoriesNotFoundPage/> : null;    
     const errorPage = error ? <ErrorPage error={error} notFoundPage={<RepositoriesNotFoundPage/>} /> : null;  
+
+    console.log('username = ' + props.username);
+    console.log('showRepSpinner = ' + showRepSpinner);
+    console.log('spinner loading = ' + loading);
 
     return (
         <div className='rep'>

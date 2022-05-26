@@ -32,12 +32,15 @@ const ContentLoadPage = () => {
     }
 
     useEffect(()=>{
+        console.log('ContentLoadPage useEffect');
         updateUser(login); 
     },[login])  
 
     const spinner = loading ? <Spinner/>:null;
     const content = !(error || !user.login) ? <Content user={user}/> : null; 
-    const errorPage = error ? <ErrorPage error={error} notFoundPage={<UserNotFoundPage/>} /> : null;    
+    const errorPage = error ? <ErrorPage error={error} notFoundPage={<UserNotFoundPage/>} /> : null;  
+
+    //console.log('user spinner loading = ' + loading);
 
     return (
         <>
