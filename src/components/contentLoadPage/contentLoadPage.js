@@ -3,8 +3,8 @@ import {useParams} from 'react-router-dom';
 import useGitHubService from '../../services/GitHubService.js';
 import Content from '../content/content.js';
 import Spinner from '../spinner/spinner.js';
+import ErrorPage from '../errorPage/errorPage.js';
 
-const ErrorPage = lazy(()=> import('../errorPage/errorPage.js'));
 const UserNotFoundPage = lazy(()=> import('../userNotFoundPage/userNotFoundPage.js'));
 
 const ContentLoadPage = () => {
@@ -21,6 +21,7 @@ const ContentLoadPage = () => {
     
     const onError = (e) =>{
         console.log(e);
+        setUser({});
     }
     
     const onRequest = (login) => {
@@ -33,7 +34,7 @@ const ContentLoadPage = () => {
     }
 
     useEffect(()=>{
-        console.log('ContentLoadPage useEffect');
+        console.log('ContentLoadPage useEffect()');
         updateUser(login); 
     },[login])  
 

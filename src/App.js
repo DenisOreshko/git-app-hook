@@ -10,11 +10,14 @@ const UserNotFoundPage = lazy(()=> import('./components/userNotFoundPage/userNot
 
 const App = () => {
   const [searchUsername, setSearchUsername] = useState('');
-  const {clearError} = useGitHubService();
+  const {error, clearError} = useGitHubService();
   const navigate = useNavigate();
 
   const onSearchUserApp = (search) => {
-    clearError();
+    if(error){
+      console.log(`onSearchUserApp() error ${error}`);
+      
+    } clearError();
     setSearchUsername(search);  
   }
 

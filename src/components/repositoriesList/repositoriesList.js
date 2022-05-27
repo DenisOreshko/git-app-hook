@@ -52,9 +52,9 @@ const RepositoriesList = (props) => {
     const emptyRepositoriesPage = (props.public_repos === 0) ? <RepositoriesNotFoundPage/> : null;    
     const errorPage = error ? <ErrorPage error={error} notFoundPage={<RepositoriesNotFoundPage/>} /> : null;  
 
-    console.log('username = ' + props.username);
-    console.log('showRepSpinner = ' + showRepSpinner);
-    console.log('spinner loading = ' + loading);
+    // console.log('username = ' + props.username);
+    // console.log('showRepSpinner = ' + showRepSpinner);
+    // console.log('spinner loading = ' + loading);
 
     return (
         <Suspense fullback={<span>Loading...</span>}>
