@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect,lazy, Suspense } from 'react';
 import useGitHubService from '../../services/GitHubService';
 import './repositoriesList.css';
 import Spinner from '../spinner/spinner';
-import ErrorPage from '../errorPage/errorPage';
 import RepositoriesNotFoundPage from '../repositoriesNotFound/repositoriesNotFound';
 import ViewRepositoriesList from '../viewRepositoriesList/viewRepositoriesList';
 
+const ErrorPage= lazy(()=> import('../errorPage/errorPage'));
 
 const RepositoriesList = (props) => {
     const [repositories, setRepositories] = useState([]);
@@ -57,12 +57,14 @@ const RepositoriesList = (props) => {
     console.log('spinner loading = ' + loading);
 
     return (
-        <div className='rep'>
-            {spinner}
-            {content}
-            {emptyRepositoriesPage}
-            {errorPage}    
-        </div>
+        <Suspense fullback={<span>Loading...</span>}>
+            <div className='rep'>
+                {spinner}
+                {content}
+                {emptyRepositoriesPage}
+                {errorPage}    
+            </div>
+        </Suspense>
     )
 }
 

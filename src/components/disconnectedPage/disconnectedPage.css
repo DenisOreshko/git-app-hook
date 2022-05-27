@@ -19,7 +19,7 @@
     /* 0%,20%{fill:#B4BFC1}
     40%,60%  {fill:#3685fc}
     100%{fill:#B4BFC1} */
-    0%,60% {fill:#e8e8e8;}
+    0%,30% {fill:#e8e8e8;}
     60%,99% {fill:#B4BFC1;}
 }
 .color-d{
@@ -30,7 +30,7 @@
     /* 0%,20%{fill:#ABB5B7}
     40%,60% {fill:#0064FF}
     100%{fill:#ABB5B7} */
-    0%,60% {fill:#e8e8e8;}
+    0%,30% {fill:#e8e8e8;}
     60%,99% {fill:#ABB5B7;}
 }
 
@@ -42,7 +42,7 @@
     /* 0%,20%{fill:#ABB5B7}
     40%,60%  {fill:#C40E72}
     100%{fill:#ABB5B7} */
-    0%,60% {fill:#e8e8e8;}
+    0%,30% {fill:#e8e8e8;}
     60%,99% {fill:#ABB5B7;}
 }
 .color-krd{
@@ -53,7 +53,7 @@
     /* 0%,20%{fill:#B4BFC1}
     40%,60%  {fill:#DB0E88}
     100%{fill:#B4BFC1} */
-    0%,60% {fill:#e8e8e8;}
+    0%,30% {fill:#e8e8e8;}
     60%,99% {fill:#B4BFC1;}
 }
 
@@ -61,7 +61,7 @@
     animation: spn 2s linear infinite;
 }
 @keyframes spn {
-    0%,60% {color:#e8e8e8;}
+    0%,60% {color:#808080;}
     60%,100% {color:#808080;}
     
 }

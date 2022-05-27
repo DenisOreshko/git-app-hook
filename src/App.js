@@ -1,12 +1,12 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, lazy, Suspense} from 'react';
 import {Route, Routes, useNavigate} from 'react-router-dom';
 import './App.css';
 import Header from './components/header/header.js';
 import InitialPage from './components/initialPage/initialPage';
 import useGitHubService from './services/GitHubService';
-import ContentLoadPage from './components/contentLoadPage/contentLoadPage.js';
 
-import UserNotFoundPage from './components/userNotFoundPage/userNotFoundPage';
+const ContentLoadPage = lazy(()=> import('./components/contentLoadPage/contentLoadPage.js'));
+const UserNotFoundPage = lazy(()=> import('./components/userNotFoundPage/userNotFoundPage'));
 
 const App = () => {
   const [searchUsername, setSearchUsername] = useState('');
@@ -26,11 +26,13 @@ const App = () => {
         <div className="App">
               <Header onSearchUserApp={onSearchUserApp}/>
               <div>
-                <Routes> 
-                  <Route exact path="/" element={<InitialPage/>}/> 
-                  <Route exact path="/:login" element={<ContentLoadPage/>}/>           
-                  <Route path="*" element={<UserNotFoundPage/>}/>                  
-                </Routes>                
+                <Suspense fullback={<span>Loading...</span>}>
+                    <Routes> 
+                      <Route exact path="/" element={<InitialPage/>}/> 
+                      <Route exact path="/:login" element={<ContentLoadPage/>}/>           
+                      <Route path="*" element={<UserNotFoundPage/>}/>                  
+                    </Routes>
+                </Suspense>                
               </div>
         </div>
   )

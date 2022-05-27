@@ -1,10 +1,11 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, lazy, Suspense} from 'react';
 import {useParams} from 'react-router-dom';
 import useGitHubService from '../../services/GitHubService.js';
 import Content from '../content/content.js';
-import ErrorPage from '../errorPage/errorPage.js';
-import UserNotFoundPage from '../userNotFoundPage/userNotFoundPage.js';
 import Spinner from '../spinner/spinner.js';
+
+const ErrorPage = lazy(()=> import('../errorPage/errorPage.js'));
+const UserNotFoundPage = lazy(()=> import('../userNotFoundPage/userNotFoundPage.js'));
 
 const ContentLoadPage = () => {
 
@@ -43,11 +44,13 @@ const ContentLoadPage = () => {
     //console.log('user spinner loading = ' + loading);
 
     return (
-        <>
-            {spinner}
-            {content}
-            {errorPage}
-        </>
+        <Suspense fullback={<span>Loading...</span>}>
+            <>
+                {spinner}
+                {content}
+                {errorPage}
+            </>
+        </Suspense>
     )
 }
 

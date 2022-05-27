@@ -1,8 +1,9 @@
 import iconFollowers from '../../resources/img/icon/shared.svg';
 import iconFollowing from '../../resources/img/icon/provate.svg';
+import avatarInvisible from '../../resources/img/ava_invisible.png';
 
 const ViewUser = ({user}) => {
-    const {avatar_url, name, html_url, login, followers, following} = user;
+    const {avatar_url = avatarInvisible, name, html_url, login, followers, following} = user;
 
     return (
         <div className="container-info">
