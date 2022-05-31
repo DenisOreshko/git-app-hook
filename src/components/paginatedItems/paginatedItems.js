@@ -1,4 +1,4 @@
-import { useEffect, useState, useReducer } from 'react';
+import { useEffect, useState} from 'react';
 import ReactPaginate from 'react-paginate';
 import Right from './right.js';
 import Left from './left.js';
@@ -10,25 +10,17 @@ const PaginatedItems = ({ itemsPerPage, onClickedPage, public_repos, userLogin})
     const [itemOffset, setItemOffset] = useState(0);
     const [forcePg, setForcePg] = useState(0);
 
-    console.log('public_repos: ' + public_repos);
-
     useEffect(() => {
       setPageCount(Math.ceil(public_repos / itemsPerPage));
-            //onClickedPage(1);
     }, [itemOffset, itemsPerPage, public_repos]);
 
     useEffect(() => {
-       // console.log('PaginatedItems  useEffect userLogin: ' + userLogin);
-        //setItemOffset(4);
-        //onClickedPage(1);
-        
         setForcePg(0);
     }, [userLogin]);    
 
     const handlePageClick = (event) => {
       const newOffset = (event.selected * itemsPerPage) % public_repos;
       onClickedPage(event.selected + 1);
-      //setCurrentPage(event.selected); 
       setItemOffset(newOffset);
       setForcePg(event.selected );
     }
