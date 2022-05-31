@@ -12,57 +12,43 @@
     width: 100%;
 }
 .color-h{
-    animation: col 2s linear infinite;
+    animation: col 3s linear infinite;
 }
 
 @keyframes col {
-    /* 0%,20%{fill:#B4BFC1}
-    40%,60%  {fill:#3685fc}
-    100%{fill:#B4BFC1} */
-    0%,60% {fill:#e8e8e8;}
+    0%,30% {fill:#e8e8e8;}
     60%,99% {fill:#B4BFC1;}
 }
 .color-d{
-    animation: cold 2s linear infinite;
+    animation: cold 3s linear infinite;
 }
 
 @keyframes cold {
-    /* 0%,20%{fill:#ABB5B7}
-    40%,60% {fill:#0064FF}
-    100%{fill:#ABB5B7} */
-    0%,60% {fill:#e8e8e8;}
+    0%,30% {fill:#e8e8e8;}
     60%,99% {fill:#ABB5B7;}
 }
 
 .color-krh{
-    animation: colkrh 2s linear infinite;
+    animation: colkrh 3s linear infinite;
 }
 
 @keyframes colkrh {
-    /* 0%,20%{fill:#ABB5B7}
-    40%,60%  {fill:#C40E72}
-    100%{fill:#ABB5B7} */
-    0%,60% {fill:#e8e8e8;}
+    0%,30% {fill:#e8e8e8;}
     60%,99% {fill:#ABB5B7;}
 }
 .color-krd{
-    animation: colkrd 2s linear infinite;
+    animation: colkrd 3s linear infinite;
 }
 
 @keyframes colkrd {
-    /* 0%,20%{fill:#B4BFC1}
-    40%,60%  {fill:#DB0E88}
-    100%{fill:#B4BFC1} */
-    0%,60% {fill:#e8e8e8;}
+    0%,30% {fill:#e8e8e8;}
     60%,99% {fill:#B4BFC1;}
 }
 
 .disconnected-container span {
-    animation: spn 2s linear infinite;
+    animation: spn 3s linear infinite;
 }
 @keyframes spn {
-    0%,60% {color:#e8e8e8;}
+    0%,60% {color:#808080;}
     60%,100% {color:#808080;}
-    
 }
-/* color:#808080; */

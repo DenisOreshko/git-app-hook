@@ -7,6 +7,7 @@ const PageNavigation = (props) =>{
     console.log('PageNavigation render');
 
     useEffect(() => {
+        
         setPublicRepos(props.public_repos);
     },[props.public_repos]);
 
@@ -15,7 +16,11 @@ const PageNavigation = (props) =>{
     }
 
     return (
+<<<<<<< HEAD
         <PaginatedItems itemsPerPage={4} onClickedPage={onPage} public_repos={public_repos} userLogin={props.userLogin}/>
+=======
+        <PaginatedItems userLogin={props.userLogin} itemsPerPage={4} onClickedPage={onPage} public_repos={public_repos} />
+>>>>>>> 147a7d0cb337d0ae6161c5cc899e6f6040230661
     ) 
 }
 
