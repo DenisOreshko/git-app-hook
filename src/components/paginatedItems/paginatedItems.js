@@ -4,20 +4,32 @@ import Right from './right.js';
 import Left from './left.js';
 import './paginatedItems.css';
 
-const PaginatedItems = ({ itemsPerPage, onClickedPage,  public_repos }) => {
+const PaginatedItems = ({ itemsPerPage, onClickedPage, public_repos, userLogin}) => {
 
     const [pageCount, setPageCount] = useState(0);
     const [itemOffset, setItemOffset] = useState(0);
+    const [forcePg, setForcePg] = useState(0);
+
+    console.log('public_repos: ' + public_repos);
 
     useEffect(() => {
       setPageCount(Math.ceil(public_repos / itemsPerPage));
+            //onClickedPage(1);
     }, [itemOffset, itemsPerPage, public_repos]);
-    
+
+    useEffect(() => {
+       // console.log('PaginatedItems  useEffect userLogin: ' + userLogin);
+        //setItemOffset(4);
+        //onClickedPage(1);
+        
+        setForcePg(0);
+    }, [userLogin]);    
 
     const handlePageClick = (event) => {
       const newOffset = (event.selected * itemsPerPage) % public_repos;    
       onClickedPage(event.selected + 1);
       setItemOffset(newOffset);
+      setForcePg(event.selected );
     }
   
     return (    
@@ -29,7 +41,8 @@ const PaginatedItems = ({ itemsPerPage, onClickedPage,  public_repos }) => {
                             onPageChange={handlePageClick}
                             pageRangeDisplayed={2}
                             marginPagesDisplayed={1}
-                            pageCount={pageCount}                
+                            pageCount={pageCount}  
+                            forcePage={forcePg}              
                             renderOnZeroPageCount={null}
                             containerClassName="pagination"
                             pageClassName="page-item"
