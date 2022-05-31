@@ -1,22 +1,33 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useReducer } from 'react';
 import ReactPaginate from 'react-paginate';
 import Right from './right.js';
 import Left from './left.js';
 import './paginatedItems.css';
 
-const PaginatedItems = ({ itemsPerPage, onClickedPage,  public_repos }) => {
+const PaginatedItems = ({ itemsPerPage, onClickedPage,  public_repos, userLogin }) => {
 
     const [pageCount, setPageCount] = useState(0);
     const [itemOffset, setItemOffset] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0);   //const [currentPage, dispatch] = useReducer();
+
 
     useEffect(() => {
-      setPageCount(Math.ceil(public_repos / itemsPerPage));
+      setPageCount(Math.ceil(public_repos / itemsPerPage)); 
     }, [itemOffset, itemsPerPage, public_repos]);
+
+    useEffect(() => {
+      console.log('PaginatedItems useEffect  userLogin: ' + userLogin);
+      setItemOffset(0);
+      setPageCount(Math.ceil(public_repos / itemsPerPage)); 
+      setCurrentPage(0);
+      //onClickedPage(1);
+    }, [userLogin]);
     
 
     const handlePageClick = (event) => {
-      const newOffset = (event.selected * itemsPerPage) % public_repos;    
+      const newOffset = (event.selected * itemsPerPage) % public_repos;
       onClickedPage(event.selected + 1);
+      setCurrentPage(event.selected); 
       setItemOffset(newOffset);
     }
   
@@ -29,8 +40,9 @@ const PaginatedItems = ({ itemsPerPage, onClickedPage,  public_repos }) => {
                             onPageChange={handlePageClick}
                             pageRangeDisplayed={2}
                             marginPagesDisplayed={1}
-                            pageCount={pageCount}                
-                            renderOnZeroPageCount={null}
+                            pageCount={pageCount}   
+                            forcePage={currentPage}          
+                            // renderOnZeroPageCount={null}
                             containerClassName="pagination"
                             pageClassName="page-item"
                             pageLinkClassName="page-link"

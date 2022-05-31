@@ -13,37 +13,35 @@ const RepositoriesList = (props) => {
     const {loading, error, getRepositories, clearError} = useGitHubService();
 
     const onRepositoriesLoaded = (repositories) => { 
-        console.log('onRepositoriesLoaded()');
+        console.log(`onRepositoriesLoaded RepositoriesList`);
         setRepositories(repositories);
         setShowRepSpinner(true);    
     }
 
     const onRequest = (username, offset, pageNumber) => {
+        //console.log('onRequest() RepositoriesList');
         getRepositories(username, offset, pageNumber).then(onRepositoriesLoaded);
     }
 
     const updateRepositories = () => {
+        console.log(`updateRepositories RepositoriesList`);
         clearError();
         const {username, public_repos, pageNumber} = props;
-        if(public_repos === 0){    
+        if(public_repos === 0){ 
+            console.log(`updateRepositories RepositoriesList return 0`);
             return;
         }
         onRequest(username, 4, pageNumber);        
     }  
 
-    useEffect(() => {
-        console.log('RepositoriesList useEffect() []');
-        //updateRepositories();
-    },[]);
-
     useEffect(()=>{
-        console.log('RepositoriesList useEffect() [props.username]');
+        console.log(`useEffect() [${props.username}] RepositoriesList`);
         setShowRepSpinner(false);
         updateRepositories();
     },[props.username]);
 
     useEffect(()=>{
-        console.log('RepositoriesList useEffect() [props.pageNumber]');        
+        console.log(`useEffect() [${props.pageNumber}] RepositoriesList`);        
         updateRepositories();
     },[props.pageNumber]);
     
@@ -52,10 +50,7 @@ const RepositoriesList = (props) => {
     const emptyRepositoriesPage = (props.public_repos === 0) ? <RepositoriesNotFoundPage/> : null;    
     const errorPage = error ? <ErrorPage error={error} notFoundPage={<RepositoriesNotFoundPage/>} /> : null;  
 
-    // console.log('username = ' + props.username);
-    // console.log('showRepSpinner = ' + showRepSpinner);
-    // console.log('spinner loading = ' + loading);
-
+    //console.log('render RepositoriesList.js');
     return (
         <Suspense fullback={<span>Loading...</span>}>
             <div className='rep'>

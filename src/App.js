@@ -5,7 +5,7 @@ import Header from './components/header/header.js';
 import InitialPage from './components/initialPage/initialPage';
 import useGitHubService from './services/GitHubService';
 
-const ContentLoadPage = lazy(()=> import('./components/contentLoadPage/contentLoadPage.js'));
+import ContentLoadPage from './components/contentLoadPage/contentLoadPage.js';
 const UserNotFoundPage = lazy(()=> import('./components/userNotFoundPage/userNotFoundPage'));
 
 const App = () => {
@@ -15,16 +15,18 @@ const App = () => {
 
   const onSearchUserApp = (search) => {
     if(error){
-      console.log(`onSearchUserApp() error ${error}`);
-      
-    } clearError();
+      console.log(`onSearchUserApp() error ${error}`);      
+    } 
+    clearError();
     setSearchUsername(search);  
   }
 
   useEffect(()=>{
     navigate(`/${searchUsername}`);
   },[searchUsername]); 
-  
+
+  console.log('render App.js');
+
   return (  
         <div className="App">
               <Header onSearchUserApp={onSearchUserApp}/>

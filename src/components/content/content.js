@@ -3,14 +3,19 @@ import User from "../user/user.js";
 import RepositoriesList from "../repositoriesList/repositoriesList";
 import PageNavigation from "../pageNavigation/pageNavigation";
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import FlexContainer from "../flexContainer/flexContainer";
-
 
 const Content = ({user}) =>{
     
     //page number of the list of repositories
-    const [page, setPage] = useState(0); 
+    const [page, setPage] = useState(0);
+
+    useEffect(()=>{
+      setPage(0); 
+    },[user]);
+
+    console.log('render Content page = ' + page);
 
     return (
       <FlexContainer 
@@ -26,7 +31,7 @@ const Content = ({user}) =>{
                     <RepositoriesList username={user.login} public_repos={user.public_repos} pageNumber={page}/> 
                 </ErrorBoundary>  
                 <ErrorBoundary>
-                    <PageNavigation public_repos={user.public_repos} onPage={(page)=> setPage(page)}/>
+                  <PageNavigation userLogin={user.login} public_repos={user.public_repos} onPage={(page)=> setPage(page)}/>
                 </ErrorBoundary> 
               </>
             }
