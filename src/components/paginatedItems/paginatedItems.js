@@ -8,21 +8,21 @@ const PaginatedItems = ({ itemsPerPage, onClickedPage, public_repos, userLogin})
 
     const [pageCount, setPageCount] = useState(0);
     const [itemOffset, setItemOffset] = useState(0);
-    const [forcePg, setForcePg] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0);
 
     useEffect(() => {
       setPageCount(Math.ceil(public_repos / itemsPerPage));
     }, [itemOffset, itemsPerPage, public_repos]);
 
     useEffect(() => {
-        setForcePg(0);
+      setCurrentPage(0);
     }, [userLogin]);    
 
     const handlePageClick = (event) => {
       const newOffset = (event.selected * itemsPerPage) % public_repos;
-      onClickedPage(event.selected + 1);
       setItemOffset(newOffset);
-      setForcePg(event.selected );
+      setCurrentPage(event.selected);
+      onClickedPage(event.selected + 1);     
     }
   
     return (    
@@ -35,7 +35,7 @@ const PaginatedItems = ({ itemsPerPage, onClickedPage, public_repos, userLogin})
                             pageRangeDisplayed={2}
                             marginPagesDisplayed={1}
                             pageCount={pageCount}  
-                            forcePage={forcePg}              
+                            forcePage={currentPage}              
                             renderOnZeroPageCount={null}
                             containerClassName="pagination"
                             pageClassName="page-item"

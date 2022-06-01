@@ -4,8 +4,8 @@ import './App.css';
 import Header from './components/header/header.js';
 import InitialPage from './components/initialPage/initialPage';
 import useGitHubService from './services/GitHubService';
-
 import ContentLoadPage from './components/contentLoadPage/contentLoadPage.js';
+
 const UserNotFoundPage = lazy(()=> import('./components/userNotFoundPage/userNotFoundPage'));
 
 const App = () => {
@@ -24,8 +24,6 @@ const App = () => {
   useEffect(()=>{
     navigate(`/${searchUsername}`);
   },[searchUsername]); 
-
-  console.log('render App.js');
 
   return (  
         <div className="App">

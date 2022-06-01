@@ -6,6 +6,8 @@ import RepositoriesNotFoundPage from '../repositoriesNotFound/repositoriesNotFou
 import ViewRepositoriesList from '../viewRepositoriesList/viewRepositoriesList';
 import PaginatedItems from '../paginatedItems/paginatedItems';
 
+const ErrorPage = lazy(()=> import('../errorPage/errorPage.js'));
+
 const RepositoriesList = (props) => {
     const [repositories, setRepositories] = useState([]);
     const [showRepSpinner, setShowRepSpinner] = useState(false);
@@ -18,7 +20,6 @@ const RepositoriesList = (props) => {
     }
 
     const onRequest = (username, offset, pageNumber) => {
-        //console.log('onRequest() RepositoriesList');
         getRepositories(username, offset, pageNumber).then(onRepositoriesLoaded);
     }
 
@@ -34,15 +35,15 @@ const RepositoriesList = (props) => {
     useEffect(()=>{
         setShowRepSpinner(false);
         updateRepositories(0);        
-    },[props.username]);
-
-    useEffect(()=>{      
-        updateRepositories(page);
-    },[page]);
+    },[props.username]);    
 
     const onPage = (pageNumber) => {
         setPage(pageNumber);         
     }
+    
+    useEffect(()=>{      
+        updateRepositories(page);
+    },[page]);
     
     const spinner = (showRepSpinner && loading) ? <Spinner/>:null;
     const content = !(error || (props.public_repos === 0)) ? <ViewRepositoriesList repositories={repositories}/> : null;   
@@ -51,10 +52,12 @@ const RepositoriesList = (props) => {
 
     return (
         <div className='rep'>
-            {spinner}
-            {content}
-            {emptyRepositoriesPage}
-            {errorPage}    
+            <Suspense fullback={<span>Loading...</span>}>
+                {spinner}
+                {content}
+                {emptyRepositoriesPage}
+                {errorPage}
+            </Suspense>    
             <PaginatedItems itemsPerPage={4} onClickedPage={onPage} public_repos={props.public_repos} userLogin={props.username}/>
         </div>
     )
