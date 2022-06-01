@@ -1,11 +1,11 @@
-import { useState, useEffect,lazy, Suspense } from 'react';
+import {useState, useEffect, lazy, Suspense} from 'react';
 import useGitHubService from '../../services/GitHubService';
-import './repositoriesList.css';
-import Spinner from '../spinner/spinner';
-import RepositoriesNotFoundPage from '../repositoriesNotFound/repositoriesNotFound';
 import ViewRepositoriesList from '../viewRepositoriesList/viewRepositoriesList';
 import PaginatedItems from '../paginatedItems/paginatedItems';
+import Spinner from '../spinner/spinner';
+import './repositoriesList.css';
 
+const RepositoriesNotFoundPage = lazy(()=> import('../repositoriesNotFound/repositoriesNotFound'));
 const ErrorPage = lazy(()=> import('../errorPage/errorPage.js'));
 
 const RepositoriesList = (props) => {

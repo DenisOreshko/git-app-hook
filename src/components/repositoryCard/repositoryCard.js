@@ -26,16 +26,11 @@ const RepositoryCard = (props) => {
 
     //hide or show more Description character limit
     const transformDescription = (description, showState, limit) => {
-        if(description !== null){           
-            if(showState){
-                return showAllDescription(description, limit, null);
-            }else{
-                return hidePartDescription(description, limit, null);             
-            }
+        if(description !== null){  
+            return showState ? showAllDescription(description, limit, null) : hidePartDescription(description, limit, null);      
         }        
         return {describe:null, atext:null};      
     }
-
 
     const {name, html_url,description} = props;
     const {describe, atext} = transformDescription(description, showState, 180);//limit no hide part 180

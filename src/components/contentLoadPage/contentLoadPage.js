@@ -41,8 +41,6 @@ const ContentLoadPage = () => {
     const content = !(error || !user.login) ? <Content user={user}/> : null; 
     const errorPage = error ? <ErrorPage error={error} notFoundPage={<UserNotFoundPage/>} /> : null;  
 
-    //console.log('render ContentLoadPage.js');
-
     return (
         <Suspense fullback={<span>Loading...</span>}>
             <>
