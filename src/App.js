@@ -21,7 +21,7 @@ const App = () => {
     clearError();
     localStorage.setItem('path', search);
     if(search === ''){
-      navigate(`/${search}`);
+      navigate(`/`);
     }else{
       navigate(`/users/${search}`);
     }    
@@ -37,7 +37,7 @@ const App = () => {
   //   }
       
   // },[searchUsername]); 
-
+console.log('render App.js');
   return (  
         <div className="App">
               <Header onSearchUserApp={onSearchUserApp}/>
