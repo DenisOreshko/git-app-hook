@@ -10,19 +10,23 @@ const UserNotFoundPage = lazy(()=> import('./components/userNotFoundPage/userNot
 
 const App = () => {
   const [searchUsername, setSearchUsername] = useState('');
-  const {error, clearError} = useGitHubService();
   const navigate = useNavigate();
+  const {error, clearError} = useGitHubService(); 
 
   const onSearchUserApp = (search) => {
     if(error){
       console.log(`onSearchUserApp() error ${error}`);      
     } 
     clearError();
+    localStorage.setItem('path', search);
     setSearchUsername(search);  
   }
 
   useEffect(()=>{
-    navigate(`/${searchUsername}`);
+    if(localStorage.getItem('path'))
+      navigate(`/${localStorage.getItem('path')}`);
+    else
+      navigate(`/${searchUsername}`); 
   },[searchUsername]); 
 
   return (  
