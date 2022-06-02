@@ -27,9 +27,11 @@ const Header = (props) => {
 
     useEffect(()=>{
         inputRef.current.focus();
+
         if(localStorage.getItem('path')){
-            inputRef.current.value = localStorage.getItem('path');
+            setSearch(localStorage.getItem('path'))
         }
+        
     },[])
 
 

@@ -5,6 +5,7 @@ import Header from './components/header/header.js';
 import InitialPage from './components/initialPage/initialPage';
 import useGitHubService from './services/GitHubService';
 import ContentLoadPage from './components/contentLoadPage/contentLoadPage.js';
+import About from './pages/About';
 
 const UserNotFoundPage = lazy(()=> import('./components/userNotFoundPage/userNotFoundPage'));
 
@@ -19,15 +20,23 @@ const App = () => {
     } 
     clearError();
     localStorage.setItem('path', search);
+    if(search === ''){
+      navigate(`/${search}`);
+    }else{
+      navigate(`/users/${search}`);
+    }    
     setSearchUsername(search);  
   }
 
-  useEffect(()=>{
-    if(localStorage.getItem('path'))
-      navigate(`/${localStorage.getItem('path')}`);
-    else
-      navigate(`/${searchUsername}`); 
-  },[searchUsername]); 
+  // useEffect(()=>{
+  //   if(localStorage.getItem('path')){
+  //     //navigate(`/${localStorage.getItem('path')}`);
+  //   }
+  //   else{
+  //     //navigate(`/${searchUsername}`); 
+  //   }
+      
+  // },[searchUsername]); 
 
   return (  
         <div className="App">
@@ -35,8 +44,9 @@ const App = () => {
               <div>
                 <Suspense fullback={<span>Loading...</span>}>
                     <Routes> 
-                      <Route exact path="/" element={<InitialPage/>}/> 
-                      <Route exact path="/:login" element={<ContentLoadPage/>}/>           
+                      <Route exact path="/" element={<InitialPage/>}/>
+                      <Route exact path="/about" element={<About/>}/>  
+                      <Route exact path="/users/:login" element={<ContentLoadPage/>}/>           
                       <Route path="*" element={<UserNotFoundPage/>}/>                  
                     </Routes>
                 </Suspense>                
