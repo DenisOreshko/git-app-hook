@@ -9,7 +9,7 @@ import ContentLoadPage from './components/contentLoadPage/contentLoadPage.js';
 const UserNotFoundPage = lazy(()=> import('./components/userNotFoundPage/userNotFoundPage'));
 
 const App = () => {
-  //const [searchUsername, setSearchUsername] = useState('');
+
   const navigate = useNavigate();
   const {error, clearError} = useGitHubService(); 
 
@@ -18,13 +18,10 @@ const App = () => {
       console.log(`onSearchUserApp() error ${error}`);      
     } 
     clearError();
+    
     localStorage.setItem('path', search);
-    if(search === ''){
-      navigate(`/`);
-    }else{
-      navigate(`/users/${search}`);
-    }    
-    //setSearchUsername(search);  
+
+    (search === '') ? navigate(`/`) : navigate(`/users/${search}`);  
   }
 
   return (  
