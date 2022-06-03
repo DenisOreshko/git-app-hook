@@ -1,5 +1,6 @@
-import {useState,useEffect,useRef} from 'react';  
-import { Link } from 'react-router-dom';
+import {useState, useEffect, useRef, useContext} from 'react';  
+import {Link, useParams} from 'react-router-dom';
+import {LoginContext} from '../../context/index.js';
 import iconGitHub from '../../resources/img/icon/icon_github.svg';
 import searchIcon from '../../resources/img/icon/search.svg';
 import './header.css';
@@ -8,7 +9,7 @@ import './header.css';
 const Header = (props) => {
 
     const [search, setSearch] = useState('');
-
+    const {loginContext, setLoginContext} = useContext(LoginContext);
     const inputRef = useRef(null);
 
     const onUpdateSearch = (e) => {     
@@ -24,16 +25,14 @@ const Header = (props) => {
             props.onSearchUserApp(search);            
         }        
     }
-
-    useEffect(()=>{
-        inputRef.current.focus();
-
-        if(localStorage.getItem('path')){
-            setSearch(localStorage.getItem('path'))
-        }
-        
+    
+    useEffect(()=>{        
+        inputRef.current.focus();      
     },[])
 
+    useEffect(()=>{   
+        setSearch(loginContext)
+    },[loginContext])
 
     return(
             <header className="header">

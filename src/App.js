@@ -5,26 +5,28 @@ import Header from './components/header/header.js';
 import InitialPage from './components/initialPage/initialPage';
 import useGitHubService from './services/GitHubService';
 import ContentLoadPage from './components/contentLoadPage/contentLoadPage.js';
-
+import { LoginContext } from './context';
 const UserNotFoundPage = lazy(()=> import('./components/userNotFoundPage/userNotFoundPage'));
 
 const App = () => {
-
   const navigate = useNavigate();
   const {error, clearError} = useGitHubService(); 
-
   const onSearchUserApp = (search) => {
     if(error){
       console.log(`onSearchUserApp() error ${error}`);      
     } 
-    clearError();
-    
-    localStorage.setItem('path', search);
-
+    clearError();    
+    //localStorage.setItem('path', search);
     (search === '') ? navigate(`/`) : navigate(`/users/${search}`);  
   }
 
+  const [loginContext, setLoginContext] = useState('');
+
   return (  
+      <LoginContext.Provider value={{
+        loginContext,
+        setLoginContext
+      }}>
         <div className="App">
               <Header onSearchUserApp={onSearchUserApp}/>
               <div>
@@ -37,6 +39,7 @@ const App = () => {
                 </Suspense>                
               </div>
         </div>
+      </LoginContext.Provider>
   )
 }
 

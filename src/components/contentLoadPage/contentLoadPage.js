@@ -1,5 +1,6 @@
-import {useEffect, useState, lazy, Suspense} from 'react';
+import {useEffect, useState, lazy, Suspense, useContext} from 'react';
 import {useParams} from 'react-router-dom';
+import {LoginContext} from '../../context/index.js';
 import useGitHubService from '../../services/GitHubService.js';
 import Content from '../content/content.js';
 import Spinner from '../spinner/spinner.js';
@@ -11,6 +12,7 @@ const ContentLoadPage = () => {
 
     const {loading, error, getUser, clearError} = useGitHubService();
     const [user, setUser] = useState({});
+    const {loginContext, setLoginContext} = useContext(LoginContext);
 
     let {login} = useParams();
 
@@ -34,6 +36,7 @@ const ContentLoadPage = () => {
     }
 
     useEffect(()=>{
+        setLoginContext(login);
         updateUser(login); 
     },[login]);  
 
