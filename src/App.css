@@ -27,22 +27,31 @@
   padding-right: 50px;
 }
 
+.fade{
+  /* transition: 0.3s transform; */
+  border: 5px solid #F90099 ;
+}
+
 .fade-enter {
   opacity: 0;
-  transform: scale(1.1);
-  
+  /* visibility: visible; */
+  /* transform: scale(1.1); */
 }
 .fade-enter-active {
   opacity: 1;
-  transform: scale(1);
-  transition: opacity 300ms, transform 300ms;
+  /* visibility: visible;  */
+  /* transform: scale(1); */  
+  transition: opacity 500ms ease-in;
 }
 .fade-exit {
   opacity: 1;
-  transform: scale(1);
+  visibility: hidden;
+  /* transform: scale(1); */
 }
 .fade-exit-active {
   opacity: 0;
-  transform: scale(0.9);
-  transition: opacity 300ms, transform 300ms;
+  /* transform: scale(0.9); */
+  visibility: hidden;
+ 
+  transition: opacity 500ms ease-in;
 }

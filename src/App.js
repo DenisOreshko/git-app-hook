@@ -37,19 +37,26 @@ const App = () => {
             <Header onSearchUserApp={onSearchUserApp}/>
             <div>
                <Suspense fullback={<span>Loading...</span>}>
-                  <TransitionGroup component={null}>
-                    <CSSTransition key={location.key} timeout={300} classNames="fade">
+                  {/* <TransitionGroup component={null}>
+                    <CSSTransition key={location.key} timeout={500} classNames="fade" mountOnEnter unmountOnExit> */}
                       <Routes location={location}>
-                          <Route exact path={'/'} element={<InitialPage/>}/> 
-                          <Route exact path={'/users/:login'} element={<ContentLoadPage/>}/> 
-                          <Route exact path={'*'} element={<UserNotFoundPage/>}/> 
+                          <Route exact path={'/'} element={<InitialPage className="fade"/>}/> 
+                          <Route exact path={'/users/:login'} element={<ContentLoadPage className="fade"/>}/> 
+                          <Route exact path={'*'} element={<UserNotFoundPage className="fade"/> }/>
+                          {/* <Route exact path={'/about'} element={<About className="fade"/> }/>   */}
                       </Routes>
-                    </CSSTransition>
-                  </TransitionGroup>
+                    {/* </CSSTransition>
+                  </TransitionGroup> */}
               </Suspense>                
             </div>
       </div>
     </LoginContext.Provider>
+  )
+}
+
+const About = () =>{
+  return (
+    <div style={{height:"300px", background:'red'}}>About this application</div>
   )
 }
 export default App;
