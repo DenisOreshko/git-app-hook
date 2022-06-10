@@ -52,22 +52,22 @@ const RepositoriesList = (props) => {
         switch(process){
             case 'waiting': 
                 return null;
-                break;
+
             case 'loading': 
                 return <>
                         <ViewRepositoriesList repositories={repositories}/>
                         {showRepSpinner ? <Spinner/>: null}
                        </>;
-                break;
+
             case 'confirmed': 
                 return <ViewRepositoriesList repositories={repositories}/>;
-                break;
+
             case 'empty_repositories':
                 return <RepositoriesNotFoundPage/>;
-                break;
+
             case 'error':
-                return <ErrorPage error={error} notFoundPage={<RepositoriesNotFoundPage/>}/>
-                break;
+                return <ErrorPage error={error} notFoundPage={<RepositoriesNotFoundPage/>}/>;
+                
             default:
                 throw new Error('Unexpected process state');            
         }

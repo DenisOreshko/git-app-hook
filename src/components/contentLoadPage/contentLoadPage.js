@@ -47,35 +47,24 @@ const ContentLoadPage = () => {
         switch(process){
             case 'waiting': 
                 return null;
-                break;
+
             case 'loading': 
-                return <>
-                        {/* <Content user={user}/> */}
-                        <Spinner/>
-                       </>;
-                break;
+                return <Spinner/>;
+
             case 'confirmed': 
                 return <Content user={user}/>;
-                break;
+
             case 'error':
-                return <ErrorPage error={error} notFoundPage={<UserNotFoundPage/>}/>
-                break;
+                return <ErrorPage error={error} notFoundPage={<UserNotFoundPage/>}/>;
+
             default:
                 throw new Error('Unexpected process state');            
         }
     }
-
-    // const spinner = loading ? <Spinner/>:null;
-    // const content = !(error || !user.login) ? <Content user={user}/> : null; 
-    // const errorPage = error ? <ErrorPage error={error} notFoundPage={<UserNotFoundPage/>} /> : null;  
-
     return (
         <Suspense fullback={<span>Loading...</span>}>
             <>
                 {setContent(process, user)}
-                {/* {spinner}
-                {content}
-                {errorPage} */}
             </>
         </Suspense>
     )
