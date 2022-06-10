@@ -1,7 +1,7 @@
 import { useHttp } from "../hooks/http.hook";
 
 const  useGitHubService = () => {
-    const {loading, request, error, clearError} = useHttp();
+    const {loading, request, error, clearError, process, setProcess} = useHttp();
 
     const _apiBase = 'https://api.github.com';
     const _baseOffset = 4;
@@ -43,7 +43,14 @@ const  useGitHubService = () => {
         }
     }
 
-    return {loading, error, clearError, getUser, getRepositories, getRateLimitRemaining}
+    return {loading, 
+            error,
+            clearError, 
+            process,
+            setProcess, 
+            getUser, 
+            getRepositories, 
+            getRateLimitRemaining}
 }
 
 export default useGitHubService;

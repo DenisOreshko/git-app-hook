@@ -10,7 +10,7 @@ const UserNotFoundPage = lazy(()=> import('../userNotFoundPage/userNotFoundPage.
 
 const ContentLoadPage = () => {
 
-    const {loading, error, getUser, clearError} = useGitHubService();
+    const {loading, error, getUser, clearError, process, setProcess} = useGitHubService();
     const [user, setUser] = useState({});
     const {loginContext, setLoginContext} = useContext(LoginContext);
 
@@ -27,7 +27,10 @@ const ContentLoadPage = () => {
     }
     
     const onRequest = (login) => {
-        getUser(login).then(onUserLoaded).catch(onError); 
+        getUser(login)
+            .then(onUserLoaded)
+            .then(()=>setProcess('confirmed'))
+            .catch(onError); 
     }
     
     const updateUser = (login) =>{  
@@ -40,16 +43,39 @@ const ContentLoadPage = () => {
         updateUser(login); 
     },[login]);  
 
-    const spinner = loading ? <Spinner/>:null;
-    const content = !(error || !user.login) ? <Content user={user}/> : null; 
-    const errorPage = error ? <ErrorPage error={error} notFoundPage={<UserNotFoundPage/>} /> : null;  
+    const setContent = (process, user) =>{
+        switch(process){
+            case 'waiting': 
+                return null;
+                break;
+            case 'loading': 
+                return <>
+                        {/* <Content user={user}/> */}
+                        <Spinner/>
+                       </>;
+                break;
+            case 'confirmed': 
+                return <Content user={user}/>;
+                break;
+            case 'error':
+                return <ErrorPage error={error} notFoundPage={<UserNotFoundPage/>}/>
+                break;
+            default:
+                throw new Error('Unexpected process state');            
+        }
+    }
+
+    // const spinner = loading ? <Spinner/>:null;
+    // const content = !(error || !user.login) ? <Content user={user}/> : null; 
+    // const errorPage = error ? <ErrorPage error={error} notFoundPage={<UserNotFoundPage/>} /> : null;  
 
     return (
         <Suspense fullback={<span>Loading...</span>}>
             <>
-                {spinner}
+                {setContent(process, user)}
+                {/* {spinner}
                 {content}
-                {errorPage}
+                {errorPage} */}
             </>
         </Suspense>
     )

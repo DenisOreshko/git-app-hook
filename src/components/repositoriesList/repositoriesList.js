@@ -11,7 +11,7 @@ const ErrorPage = lazy(()=> import('../errorPage/errorPage.js'));
 const RepositoriesList = (props) => {
     const [repositories, setRepositories] = useState([]);
     const [showRepSpinner, setShowRepSpinner] = useState(false);
-    const {loading, error, getRepositories, clearError} = useGitHubService();
+    const {error, getRepositories, clearError, process, setProcess} = useGitHubService();
     const [page, setPage] = useState(0);
 
     const onRepositoriesLoaded = (repositories) => { 
@@ -20,13 +20,16 @@ const RepositoriesList = (props) => {
     }
 
     const onRequest = (username, offset, pageNumber) => {
-        getRepositories(username, offset, pageNumber).then(onRepositoriesLoaded);
+        getRepositories(username, offset, pageNumber)
+            .then(onRepositoriesLoaded)
+            .then(()=>setProcess('confirmed'));
     }
 
     const updateRepositories = (pageNumb) => {
         clearError();
         const {username, public_repos} = props;
         if(public_repos === 0){    
+            setProcess('empty_repositories')
             return;
         }
         onRequest(username, 4, pageNumb);        
@@ -44,19 +47,36 @@ const RepositoriesList = (props) => {
     useEffect(()=>{      
         updateRepositories(page);
     },[page]);
-    
-    const spinner = (showRepSpinner && loading) ? <Spinner/>:null;
-    const content = !(error || (props.public_repos === 0)) ? <ViewRepositoriesList repositories={repositories}/> : null;   
-    const emptyRepositoriesPage = (props.public_repos === 0) ? <RepositoriesNotFoundPage/> : null;    
-    const errorPage = error ? <ErrorPage error={error} notFoundPage={<RepositoriesNotFoundPage/>} /> : null;  
+
+    const setContent = (process, repositories) =>{
+        switch(process){
+            case 'waiting': 
+                return null;
+                break;
+            case 'loading': 
+                return <>
+                        <ViewRepositoriesList repositories={repositories}/>
+                        {showRepSpinner ? <Spinner/>: null}
+                       </>;
+                break;
+            case 'confirmed': 
+                return <ViewRepositoriesList repositories={repositories}/>;
+                break;
+            case 'empty_repositories':
+                return <RepositoriesNotFoundPage/>;
+                break;
+            case 'error':
+                return <ErrorPage error={error} notFoundPage={<RepositoriesNotFoundPage/>}/>
+                break;
+            default:
+                throw new Error('Unexpected process state');            
+        }
+    }
 
     return (
         <div className='rep'>
             <Suspense fullback={<span>Loading...</span>}>
-                {spinner}
-                {content}
-                {emptyRepositoriesPage}
-                {errorPage}
+                {setContent(process, repositories)}
             </Suspense>    
             <PaginatedItems itemsPerPage={4} onClickedPage={onPage} public_repos={props.public_repos} userLogin={props.username}/>
         </div>
